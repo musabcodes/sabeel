@@ -1076,11 +1076,11 @@
       const btn = form.querySelector('button');
       const input = form.querySelector('input[type="email"]');
 
+      const formData = new FormData(form);
+
       btn.textContent = 'Sending...';
       btn.disabled = true;
       input.disabled = true;
-
-      const formData = new FormData(form);
 
       fetch('https://api.web3forms.com/submit', {
         method: 'POST',
@@ -1115,11 +1115,11 @@
       const btn = form.querySelector('button');
       const fields = form.querySelectorAll('input, textarea');
 
+      const formData = new FormData(form);
+
       btn.textContent = 'Sending...';
       btn.disabled = true;
       fields.forEach(f => f.disabled = true);
-
-      const formData = new FormData(form);
 
       fetch('https://api.web3forms.com/submit', {
         method: 'POST',
