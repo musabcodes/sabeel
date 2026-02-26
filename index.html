@@ -1017,9 +1017,12 @@
           <h2>Send a message</h2>
           <p>Have a question, suggestion, or just want to say salaam?</p>
           <form class="c-form" onsubmit="handleContact(event)">
-            <input type="text" class="input input-light" placeholder="Your name" required aria-label="Name">
-            <input type="email" class="input input-light" placeholder="Your email" required aria-label="Email">
-            <textarea class="input input-light" placeholder="Your message" required aria-label="Message"
+            <input type="hidden" name="access_key" value="209e5ec6-9b23-406b-9187-9fd7c84c1ec3">
+            <input type="hidden" name="subject" value="New Contact Message from Sabeel">
+            <input type="text" name="name" class="input input-light" placeholder="Your name" required aria-label="Name">
+            <input type="email" name="email" class="input input-light" placeholder="Your email" required
+              aria-label="Email">
+            <textarea name="message" class="input input-light" placeholder="Your message" required aria-label="Message"
               style="min-height:100px"></textarea>
             <button type="submit" class="btn btn-glass-light">Send Message</button>
           </form>
@@ -1029,7 +1032,9 @@
           <h2>Be the first to know.</h2>
           <p>Sabeel is currently in development. Leave your email and we'll let you know when it's ready.</p>
           <form class="cta-form" onsubmit="handleSubmit(event)">
-            <input type="email" class="input input-light" placeholder="you@email.com" required
+            <input type="hidden" name="access_key" value="209e5ec6-9b23-406b-9187-9fd7c84c1ec3">
+            <input type="hidden" name="subject" value="New Early Access Sign-up for Sabeel">
+            <input type="email" name="email" class="input input-light" placeholder="you@email.com" required
               aria-label="Email address">
             <button type="submit" class="btn btn-solid">Notify Me</button>
           </form>
@@ -1067,20 +1072,80 @@
 
     function handleSubmit(e) {
       e.preventDefault();
-      const btn = e.target.querySelector('button');
-      const input = e.target.querySelector('input');
-      btn.textContent = 'Thank you!';
-      btn.disabled = true; input.disabled = true;
-      setTimeout(() => { btn.textContent = 'Notify Me'; btn.disabled = false; input.disabled = false; input.value = ''; }, 3000);
+      const form = e.target;
+      const btn = form.querySelector('button');
+      const input = form.querySelector('input[type="email"]');
+
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+      input.disabled = true;
+
+      const formData = new FormData(form);
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      })
+        .then(async (response) => {
+          let json = await response.json();
+          if (response.status == 200) {
+            btn.textContent = 'Thank you!';
+          } else {
+            console.log(response);
+            btn.textContent = 'Error!';
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          btn.textContent = 'Error!';
+        })
+        .finally(() => {
+          setTimeout(() => {
+            btn.textContent = 'Notify Me';
+            btn.disabled = false;
+            input.disabled = false;
+            form.reset();
+          }, 3000);
+        });
     }
 
     function handleContact(e) {
       e.preventDefault();
-      const btn = e.target.querySelector('button');
-      const fields = e.target.querySelectorAll('input, textarea');
-      btn.textContent = 'Sent!';
-      btn.disabled = true; fields.forEach(f => f.disabled = true);
-      setTimeout(() => { btn.textContent = 'Send Message'; btn.disabled = false; fields.forEach(f => { f.disabled = false; f.value = ''; }); }, 3000);
+      const form = e.target;
+      const btn = form.querySelector('button');
+      const fields = form.querySelectorAll('input, textarea');
+
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+      fields.forEach(f => f.disabled = true);
+
+      const formData = new FormData(form);
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+      })
+        .then(async (response) => {
+          let json = await response.json();
+          if (response.status == 200) {
+            btn.textContent = 'Sent!';
+          } else {
+            console.log(response);
+            btn.textContent = 'Error!';
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          btn.textContent = 'Error!';
+        })
+        .finally(() => {
+          setTimeout(() => {
+            btn.textContent = 'Send Message';
+            btn.disabled = false;
+            fields.forEach(f => f.disabled = false);
+            form.reset();
+          }, 3000);
+        });
     }
   </script>
 
