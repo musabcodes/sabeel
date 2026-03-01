@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sabeel — Support Your Local Muslim Community</title>
+  <link rel="icon" type="image/png" href="favicon.png">
   <meta name="description"
     content="Sabeel is a platform that makes it easy to find, connect with, and give to local masajid and Muslim community organizations.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -368,6 +369,9 @@
       font-weight: 700;
       color: #fff;
       letter-spacing: -0.02em;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
     }
 
     .hero-nav a {
@@ -402,10 +406,16 @@
     }
 
     .hero-line {
-      width: 48px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      width: 90px;
+      height: 90px;
       margin-bottom: 8px;
+    }
+
+    .hero-line img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
     }
 
     .hero h1 {
@@ -862,7 +872,7 @@
     <div class="hero-img"></div>
     <div class="hero-ov"></div>
     <nav class="hero-nav">
-      <span class="logo">sabeel</span>
+      <a href="#" class="logo"><img src="logo.png" alt="Sabeel" style="height:28px;filter:brightness(0) invert(1);vertical-align:middle;margin-right:8px">sabeel</a>
       <div class="nav-links">
         <a href="#about">About</a>
         <a href="#features">Features</a>
@@ -871,7 +881,7 @@
       </div>
     </nav>
     <div class="hero-body">
-      <div class="hero-line"></div>
+      <div class="hero-line"><img src="logo.png" alt="Sabeel logo"></div>
       <h1>sabeel<br><span class="hero-mainline">give <span class="hero-highlight">locally</span>, effortlessly</span>
       </h1>
       <a href="#cta" class="btn btn-hero">Get Early Access</a>
